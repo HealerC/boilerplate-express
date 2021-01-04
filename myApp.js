@@ -8,6 +8,9 @@ app.get("/", (req, res) => {
 	res.send("Hello Express");
 });
 
+const assets = __dirname + "/public";
+app.use(express.static(assets));
+
 /* Serve an HTML file */
 app.get("/register", (req, res) => {
 	const path = __dirname + "/views/index.html";
