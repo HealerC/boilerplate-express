@@ -18,8 +18,15 @@ app.get("/register", (req, res) => {
 })
 
 /* Serve a JSON File */
+require("dotenv").config( {path: __dirname+"/.env"} );	// Required if .env is to be used locally
 app.get("/json", (req, res) => {
-	res.json({"message": "Hello json"});
+	const message = "Hello json";
+	console.log(process.env.MESSAGE_STYLE);
+	if (process.env.MESSAGE_STYLE == "uppercase") {
+		res.json({"message": message.toUpperCase()});
+	} else {
+		res.json({"message": message});
+	}
 });
 
 
