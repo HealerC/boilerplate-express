@@ -2,6 +2,12 @@ var express = require('express');
 var app = express();
 console.log("Hello World");
 
+/* Mount a logger root-level middleware */
+app.use(logger);
+function logger(req, res, next) {
+	console.log(req.method + " " + req.path + " - " + req.ip);
+	next();
+}
 
 /* Serve a string */
 app.get("/", (req, res) => {
@@ -21,7 +27,6 @@ app.get("/register", (req, res) => {
 require("dotenv").config( {path: __dirname+"/.env"} );	// Required if .env is to be used locally
 app.get("/json", (req, res) => {
 	const message = "Hello json";
-	console.log(process.env.MESSAGE_STYLE);
 	if (process.env.MESSAGE_STYLE == "uppercase") {
 		res.json({"message": message.toUpperCase()});
 	} else {
