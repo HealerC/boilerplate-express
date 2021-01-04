@@ -3,6 +3,10 @@ var app = express();
 console.log("Hello World");
 
 
+/* Serve a string */
+app.get("/", (req, res) => {
+	res.send("Hello Express");
+});
 
 
 
