@@ -17,7 +17,10 @@ app.get("/register", (req, res) => {
 	res.sendFile(path);
 })
 
-
+/* Serve a JSON File */
+app.get("/json", (req, res) => {
+	res.json({"message": "Hello json"});
+});
 
 
 
