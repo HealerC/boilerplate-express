@@ -42,7 +42,13 @@ app.get("/now", (req, res, next) => {
 	res.json({time: req.time});
 });
 
-
+/* Use request parameters to build an echo */
+app.get("/:word/echo", (req, res, next) => {
+	req.title = "Echo from server"
+	next();
+}, (req, res) => {
+	res.json({ echo: req.params.word, title: req.title });
+});
 
 
 
