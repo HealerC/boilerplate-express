@@ -8,8 +8,11 @@ app.get("/", (req, res) => {
 	res.send("Hello Express");
 });
 
-
-
+/* Serve an HTML file */
+app.get("/register", (req, res) => {
+	const path = __dirname + "/views/index.html";
+	res.sendFile(path);
+})
 
 
 
