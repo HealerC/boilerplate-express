@@ -55,29 +55,36 @@ app.get("/:word/echo", (req, res, next) => {
 });
 
 /* Use query parameters for GET and POST request */
-app.route("/name").get(queryMiddleware, nameHandler).post(queryMiddleware, nameHandler);
+app.route("/name").get(queryMiddleware, nameHandler).post(postMiddleware, nameHandler);
+
+function nameHandler(req, res) {
+	res.json({title: req.title, name: req.firstName + " " + req.lastName});
+}
 
 function queryMiddleware(req, res, next) {
 	req.title = "\"Echo\" from server (using query parameters)";
 	let firstName = req.query.first;
 	let lastName = req.query.last;
+	({firstName: req.firstName, lastName: req.lastName} = validateName(firstName, lastName));
+	next();
+}
+
+function postMiddleware(req, res, next) {
+	req.title = "\"Echo\" from server (using POST)";
+	let firstName = req.body.first;
+	let lastName = req.body.last;
+	({firstName: req.firstName, lastName: req.lastName} = validateName(firstName, lastName));
+	next();
+}
+function validateName(firstName, lastName) {
 	if (firstName == undefined) {
 		firstName = "";
 	}
 	if (lastName == undefined) {
 		lastName = "";
 	}
-	req.firstName = firstName;
-	req.lastName = lastName;
-	next();
+	return {firstName, lastName};
 }
-
-function nameHandler(req, res) {
-	res.json({title: req.title, name: req.firstName + " " + req.lastName});
-}
-
-
-
 
 
 
