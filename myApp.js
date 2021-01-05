@@ -44,16 +44,23 @@ app.get("/now", (req, res, next) => {
 
 /* Use request parameters to build an echo */
 app.get("/:word/echo", (req, res, next) => {
-	req.title = "Echo from server"
+	req.title = "Echo from server (using request parameters)"
 	next();
 }, (req, res) => {
 	res.json({ echo: req.params.word, title: req.title });
 });
 
+/* Use query parameters for GET and POST request */
+app.route("/name").get(queryMiddleware, nameHandler).post(queryMiddleware, nameHandler);
 
+function queryMiddleware(req, res, next) {
+	req.title = '"Echo" from server (using query parameters)';
+	next();
+}
 
-
-
+function nameHandler(req, res) {
+	res.json({title: req.title, name: req.query.first + " " + req.query.last});
+}
 
 
 
