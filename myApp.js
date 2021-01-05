@@ -1,6 +1,10 @@
 var express = require('express');
+const bodyParser = require('body-parser');
 var app = express();
 console.log("Hello World");
+
+/* Mount a middleware that allows parsing of the payload of a POST request */
+app.use(bodyParser.urlencoded({extended: false}));
 
 /* Mount a logger root-level middleware */
 app.use(logger);
