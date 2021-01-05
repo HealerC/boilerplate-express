@@ -54,12 +54,22 @@ app.get("/:word/echo", (req, res, next) => {
 app.route("/name").get(queryMiddleware, nameHandler).post(queryMiddleware, nameHandler);
 
 function queryMiddleware(req, res, next) {
-	req.title = '"Echo" from server (using query parameters)';
+	req.title = "\"Echo\" from server (using query parameters)";
+	let firstName = req.query.first;
+	let lastName = req.query.last;
+	if (firstName == undefined) {
+		firstName = "";
+	}
+	if (lastName == undefined) {
+		lastName = "";
+	}
+	req.firstName = firstName;
+	req.lastName = lastName;
 	next();
 }
 
 function nameHandler(req, res) {
-	res.json({title: req.title, name: req.query.first + " " + req.query.last});
+	res.json({title: req.title, name: req.firstName + " " + req.lastName});
 }
 
 
